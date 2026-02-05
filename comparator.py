@@ -28,8 +28,7 @@ class GraphComparator:
         self.analyzers.append(analyzer)
         self.visualizers.append(visualizer)
     
-    def compare_eigenvector(self, eigenvector_index, layout='spring', 
-                           scale_factor=2000, figsize=None):
+    def compare_eigenvector(self, eigenvector_index, layout='spring', scale_factor=2000, figsize=None):
         """
         Compare the same eigenvector across multiple graphs.
         
@@ -58,10 +57,7 @@ class GraphComparator:
             axes = [axes]
         
         for i, visualizer in enumerate(self.visualizers):
-            visualizer.plot_eigenvector(eigenvector_index, 
-                                       layout=layout, 
-                                       scale_factor=scale_factor, 
-                                       ax=axes[i])
+            visualizer.plot_eigenvector(eigenvector_index, layout=layout, scale_factor=scale_factor, ax=axes[i])
         
         plt.tight_layout()
         plt.show()

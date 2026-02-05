@@ -1,12 +1,14 @@
 import numpy as np
-from .graph import Graph
+from typing import Tuple
+from numpy.typing import NDArray
+from graph import Graph
 
 class SpectralAnalyzer:
     """
     Performs spectral analysis on a graph.
     """
     
-    def __init__(self, graph):
+    def __init__(self, graph: Graph) -> None:
         """
         Initialize the analyzer with a graph.
         
@@ -15,13 +17,13 @@ class SpectralAnalyzer:
         graph : Graph
             Instance of the Graph class
         """
-        self.graph = graph
-        self.eigenvalues = None
-        self.eigenvectors = None
+        self.graph: Graph = graph
+        self.eigenvalues: NDArray[np.complex128] = None
+        self.eigenvectors: NDArray[np.complex128] = None
         
         self._compute_spectrum()
     
-    def _compute_spectrum(self):
+    def _compute_spectrum(self) -> None:
         """Compute eigenvalues and eigenvectors of the Laplacian."""
         L = self.graph.get_laplacian_matrix()
         eigvals, eigvecs = np.linalg.eig(L)
@@ -31,7 +33,7 @@ class SpectralAnalyzer:
         self.eigenvalues = eigvals[idx]
         self.eigenvectors = eigvecs[:, idx]
     
-    def get_eigenvalue(self, index):
+    def get_eigenvalue(self, index: int) -> float:
         """
         Get a specific eigenvalue.
         
@@ -46,7 +48,7 @@ class SpectralAnalyzer:
         """
         return self.eigenvalues[index].real
     
-    def get_eigenvector(self, index):
+    def get_eigenvector(self, index: int) -> NDArray[np.float64]:
         """
         Get a specific eigenvector.
         
@@ -57,41 +59,39 @@ class SpectralAnalyzer:
         
         Returns:
         --------
-        numpy.ndarray : The eigenvector
+        NDArray[np.float64] : The eigenvector
         """
         return self.eigenvectors[:, index].real
     
-    def get_all_eigenvalues(self):
+    def get_all_eigenvalues(self) -> NDArray[np.complex128]:
         """Return all eigenvalues."""
         return self.eigenvalues
     
-    def get_all_eigenvectors(self):
+    def get_all_eigenvectors(self) -> NDArray[np.complex128]:
         """Return all eigenvectors."""
         return self.eigenvectors
     
-    def print_eigenvalues(self):
-        """Print all eigenvalues."""
-        print(f"\n{'='*70}")
-        print(f"EIGENVALUES - {self.graph.name}")
-        print(f"{'='*70}")
-        for i, ev in enumerate(self.eigenvalues):
-            print(f"  λ_{i} = {ev:.6f}")
+    def print_eigenvalues(self) -> None:
+        """Print all eigenvalues as a list."""
+        formatted = ', '.join([f'{val:.2f}' for val in self.eigenvalues.real])
+        print(f"\nEigenvalues ({self.graph.name}):")
+        print(f"[{formatted}]")
     
-    def print_eigenvector(self, index):
+    def print_eigenvector(self, index: int) -> None:
         """
-        Print detailed information about a specific eigenvector.
+        Print a specific eigenvector as a list.
         
         Parameters:
         -----------
         index : int
             Index of the eigenvector to print
         """
-        print(f"\n{'='*70}")
-        print(f"EIGENVECTOR {index} - {self.graph.name}")
-        print(f"{'='*70}")
-        print(f"Eigenvalue: λ_{index} = {self.get_eigenvalue(index):.6f}")
-        print(f"Eigenvector:")
-        
         eigenvector = self.get_eigenvector(index)
-        for j, val in enumerate(eigenvector):
-            print(f"  Node {j}: {val:+.6f}")
+        formatted = ', '.join([f'{val:.2f}' for val in eigenvector])
+        print(f"\nEigenvector {index} (λ={self.get_eigenvalue(index):.2f}):")
+        print(f"[{formatted}]")
+    
+    def print_all_eigenvectors(self) -> None:
+        """Print all eigenvectors as a matrix."""
+        print(f"\nAll Eigenvectors ({self.graph.name}):")
+        print(self.eigenvectors.real)
