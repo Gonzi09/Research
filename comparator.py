@@ -62,13 +62,3 @@ class GraphComparator:
         plt.tight_layout()
         plt.show()
     
-    def print_eigenvalues_comparison(self):
-        """Print eigenvalues of all graphs for comparison."""
-        print(f"\n{'='*70}")
-        print("EIGENVALUES COMPARISON")
-        print(f"{'='*70}\n")
-        
-        for graph, analyzer in zip(self.graphs, self.analyzers):
-            print(f"{graph.name}:")
-            print(f"  {analyzer.get_all_eigenvalues()}")
-            print()

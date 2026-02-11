@@ -22,9 +22,9 @@ class Graph:
         self.n_nodes = n_nodes
         self.name = name
         
-        self.W = None  # Adjacency matrix
-        self.D = None  # Degree matrix
-        self.L = None  # Laplacian matrix
+        self.W = None  # Adjacency 
+        self.D = None  # Degree 
+        self.L = None  # Laplacian 
         
         self._compute_matrices()
     

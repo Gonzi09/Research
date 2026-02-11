@@ -4,33 +4,27 @@ from visualizer import GraphVisualizer
 from typing import List, Tuple
 
 
-# Define graph
-edges_disconnected: List[Tuple[int, int, int]] = [
+edges_disconnected: List[Tuple[int, int, float]] = [
     (0, 1, 1),
     (1, 2, 1),
-    (1, 3, 1),
-    (4, 5, 1),
-    (4, 6, 1),
-    (4, 7, 1),
-    (5, 6, 1),
-    (5, 7, 1),
-    (6, 7, 1)
 ]
 
 
+
 # Configuration
-EIGENVECTORS_TO_COMPARE = [4,5]
+EIGENVECTORS_TO_COMPARE = [0,1]
 SCALE_FACTOR = 2000
 LAYOUT = 'spring'
 
 
-# Create graph
-graph: Graph = Graph(edges_disconnected, 8, "Disconnected")
+# Graph
+graph: Graph = Graph(edges_disconnected, 3, "Disconnected")
 
-# Create analyzer
+
+# Analyzer
 analyzer: SpectralAnalyzer = SpectralAnalyzer(graph)
 
-# Create visualizer
+# Visualizer
 viz: GraphVisualizer = GraphVisualizer(graph, analyzer)
 
 
@@ -42,5 +36,5 @@ for i in range(graph.n_nodes):
     analyzer.print_eigenvector(i)
 
 
-# Compare eigenvectors visually
+# Compare eigenvectors
 viz.compare_eigenvectors(EIGENVECTORS_TO_COMPARE, layout=LAYOUT, scale_factor=SCALE_FACTOR)
