@@ -1,4 +1,7 @@
 Boston/data/
+Boston/cache/
+Graphs/
+
 __pycache__/
 *.pyc
 .DS_Store
